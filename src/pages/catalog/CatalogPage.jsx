@@ -101,6 +101,7 @@ const CatalogPage = () => {
             {products.map((product, index) => (
               <ProductCard
                 key={`${product.id}-${product.name}-${product.brand}-${index}`}
+                productId={product.id}
                 brand={product.brand}
                 name={product.name}
                 price={formatPrice(product.basePrice)}
