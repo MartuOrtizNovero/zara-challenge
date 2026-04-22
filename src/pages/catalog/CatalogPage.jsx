@@ -4,6 +4,8 @@ import SearchBar from "../../components/search-bar/SearchBar.jsx";
 import { getProducts } from "../../api/services/productsService.js";
 import styles from "./CatalogPage.module.css";
 
+const SEARCH_DEBOUNCE_DELAY = 300;
+
 const formatPrice = (price) => {
   return new Intl.NumberFormat("es-ES", {
     style: "currency",
@@ -14,20 +16,33 @@ const formatPrice = (price) => {
 
 const CatalogPage = () => {
   const [searchValue, setSearchValue] = useState("");
+  const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      setDebouncedSearchValue(searchValue.trim());
+    }, SEARCH_DEBOUNCE_DELAY);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [searchValue]);
 
   useEffect(() => {
     const loadProducts = async () => {
       setIsLoading(true);
       setErrorMessage("");
 
-      const result = await getProducts();
+      const result = await getProducts({
+        search: debouncedSearchValue,
+      });
 
       if (!result.ok) {
-        setErrorMessage(result.errorMessage);
         setProducts([]);
+        setErrorMessage(result.errorMessage);
         setIsLoading(false);
         return;
       }
@@ -37,11 +52,14 @@ const CatalogPage = () => {
     };
 
     loadProducts();
-  }, []);
+  }, [debouncedSearchValue]);
 
   const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
   };
+
+  const showProducts = !isLoading && !errorMessage && products.length > 0;
+  const showEmptyState = !isLoading && !errorMessage && products.length === 0;
 
   return (
     <main className={styles.page}>
@@ -69,7 +87,16 @@ const CatalogPage = () => {
           <p className={styles.errorMessage}>{errorMessage}</p>
         ) : null}
 
-        {!isLoading && !errorMessage ? (
+        {showEmptyState ? (
+          <div className={styles.emptyState}>
+            <p className={styles.emptyStateTitle}>No products found</p>
+            <p className={styles.emptyStateDescription}>
+              Try searching for another brand or model.
+            </p>
+          </div>
+        ) : null}
+
+        {showProducts ? (
           <div className={styles.productsGrid}>
             {products.map((product, index) => (
               <ProductCard

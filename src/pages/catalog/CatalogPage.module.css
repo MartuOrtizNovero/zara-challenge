@@ -67,3 +67,18 @@
 .errorMessage {
   color: var(--color-danger);
 }
+
+.emptyState {
+  padding: var(--spacing-4xl) 0;
+}
+
+.emptyStateTitle {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.emptyStateDescription {
+  margin-top: var(--spacing-sm);
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
