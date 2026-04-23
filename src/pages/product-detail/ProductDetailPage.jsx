@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getProductById } from "../../api/services/productsService.js";
+import { useCart } from "../../context/cart/useCart.js";
 import styles from "./ProductDetailPage.module.css";
 
 const formatPrice = (price) => {
@@ -11,9 +12,20 @@ const formatPrice = (price) => {
   }).format(price);
 };
 
+const createCartItemId = () => {
+  if (window.crypto?.randomUUID) {
+    return window.crypto.randomUUID();
+  }
+
+  const randomValues = new Uint32Array(4);
+  window.crypto.getRandomValues(randomValues);
+
+  return `cart-item-${Array.from(randomValues).join("-")}`;
+};
+
 const ProductDetailPage = () => {
   const { productId } = useParams();
-
+  const { addItemToCart } = useCart();
   const [product, setProduct] = useState(null);
   const [selectedStorage, setSelectedStorage] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
@@ -70,6 +82,28 @@ const ProductDetailPage = () => {
   const currentImage = selectedColor?.imageUrl || product.imageUrl;
   const currentPrice = selectedStorage?.price || product.basePrice;
   const isAddToCartDisabled = !selectedStorage || !selectedColor;
+
+  const handleAddToCart = () => {
+    if (isAddToCartDisabled) {
+      return;
+    }
+
+    const cartItem = {
+      cartItemId: createCartItemId(),
+      productId: product.id,
+      brand: product.brand,
+      name: product.name,
+      price: currentPrice,
+      imageUrl: currentImage,
+      storage: selectedStorage.capacity,
+      color: {
+        name: selectedColor.name,
+        hexCode: selectedColor.hexCode,
+      },
+    };
+
+    addItemToCart(cartItem);
+  };
 
   return (
     <main className={styles.page}>
@@ -162,6 +196,7 @@ const ProductDetailPage = () => {
             type="button"
             className={styles.addToCartButton}
             disabled={isAddToCartDisabled}
+            onClick={handleAddToCart}
           >
             Add to cart
           </button>
