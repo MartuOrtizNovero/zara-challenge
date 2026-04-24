@@ -3,6 +3,11 @@
   background-color: #ffffff;
 }
 
+.productsGridViewport {
+  width: 100%;
+  overflow: hidden;
+}
+
 .searchSection {
   width: 100%;
   padding: 0.75rem var(--page-horizontal-padding) 1rem;
@@ -37,7 +42,7 @@
   width: 100%;
   border-top: var(--catalog-border-width) solid var(--catalog-border-color);
   border-left: var(--catalog-border-width) solid var(--catalog-border-color);
-} 
+}
 
 @media (max-width: 1600px) {
   .productsGrid {
@@ -94,6 +99,6 @@
 }
 
 .productsGrid.productsGridCompact {
-  width: fit-content;
-  grid-template-columns: repeat(var(--products-count), 21.5rem);
+  width: min(100%, var(--compact-grid-width));
+  grid-template-columns: repeat(var(--products-count), minmax(0, 1fr));
 }

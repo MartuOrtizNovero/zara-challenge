@@ -1,10 +1,30 @@
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import ProductCard from "../../components/product-card/ProductCard.jsx";
 import SearchBar from "../../components/search-bar/SearchBar.jsx";
 import { getProducts } from "../../api/services/productsService.js";
 import styles from "./CatalogPage.module.css";
 
 const SEARCH_DEBOUNCE_DELAY = 300;
+const PRODUCT_CARD_WIDTH_REM = 21.5;
+const GRID_ANIMATION_OFFSET = 80;
+
+const productsGridVariants = {
+  hidden: (direction) => ({
+    opacity: 0,
+    x: direction === "filter" ? GRID_ANIMATION_OFFSET : -GRID_ANIMATION_OFFSET,
+  }),
+  visible: {
+    opacity: 1,
+    x: 0,
+  },
+  exit: (direction) => ({
+    opacity: 0,
+    x: direction === "filter" ? -GRID_ANIMATION_OFFSET : GRID_ANIMATION_OFFSET,
+  }),
+};
+
+const MotionDiv = motion.div;
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat("es-ES", {
@@ -13,6 +33,9 @@ const formatPrice = (price) => {
     maximumFractionDigits: 0,
   }).format(price);
 };
+const getCatalogProductKey = (product, index) => {
+  return `${product.id}-${product.name}-${product.brand}-${index}`;
+};
 
 const CatalogPage = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -20,6 +43,8 @@ const CatalogPage = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [animationDirection, setAnimationDirection] = useState("filter");
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
@@ -55,13 +80,20 @@ const CatalogPage = () => {
   }, [debouncedSearchValue]);
 
   const handleSearchChange = (event) => {
-    setSearchValue(event.target.value);
+    const nextValue = event.target.value;
+
+    setAnimationDirection(
+      nextValue.trim().length >= searchValue.trim().length ? "filter" : "clear",
+    );
+
+    setSearchValue(nextValue);
   };
 
-  const showProducts = !isLoading && !errorMessage && products.length > 0;
+  const showProducts = !errorMessage && products.length > 0;
   const showEmptyState = !isLoading && !errorMessage && products.length === 0;
 
   const handleClearSearch = () => {
+    setAnimationDirection("clear");
     setSearchValue("");
   };
 
@@ -72,8 +104,15 @@ const CatalogPage = () => {
   }`;
 
   const productsGridStyle = isCompactGrid
-    ? { "--products-count": products.length }
+    ? {
+        "--products-count": products.length,
+        "--compact-grid-width": `${products.length * PRODUCT_CARD_WIDTH_REM}rem`,
+      }
     : undefined;
+
+  const productsGridKey = products
+    .map((product, index) => getCatalogProductKey(product, index))
+    .join("|");
 
   return (
     <main className={styles.page}>
@@ -107,18 +146,49 @@ const CatalogPage = () => {
           </div>
         ) : null}
         {showProducts ? (
-          <div className={productsGridClassName} style={productsGridStyle}>
-            {products.map((product, index) => (
-              <ProductCard
-                key={`${product.id}-${product.name}-${product.brand}-${index}`}
-                productId={product.id}
-                brand={product.brand}
-                name={product.name}
-                price={formatPrice(product.basePrice)}
-                imageUrl={product.imageUrl}
-                imageAlt={product.name}
-              />
-            ))}
+          <div className={styles.productsGridViewport}>
+            <AnimatePresence
+              initial={false}
+              mode="wait"
+              custom={animationDirection}
+            >
+              <MotionDiv
+                key={productsGridKey}
+                className={productsGridClassName}
+                style={productsGridStyle}
+                custom={animationDirection}
+                variants={productsGridVariants}
+                initial={shouldReduceMotion ? false : "hidden"}
+                animate="visible"
+                exit="exit"
+                transition={
+                  shouldReduceMotion
+                    ? { duration: 0 }
+                    : {
+                        x: {
+                          duration: 0.5,
+                          ease: [0.22, 1, 0.36, 1],
+                        },
+                        opacity: {
+                          duration: 0.35,
+                          ease: "easeOut",
+                        },
+                      }
+                }
+              >
+                {products.map((product, index) => (
+                  <ProductCard
+                    key={getCatalogProductKey(product, index)}
+                    productId={product.id}
+                    brand={product.brand}
+                    name={product.name}
+                    price={formatPrice(product.basePrice)}
+                    imageUrl={product.imageUrl}
+                    imageAlt={product.name}
+                  />
+                ))}
+              </MotionDiv>
+            </AnimatePresence>
           </div>
         ) : null}
       </section>
