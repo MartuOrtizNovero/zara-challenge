@@ -25,6 +25,22 @@
   height: 1.5rem;
 }
 
+.logoLink,
+.cartLink {
+  transition: opacity 0.2s ease;
+}
+
+.logoLink:hover,
+.cartLink:hover {
+  opacity: 0.6;
+}
+
+.logoLink:focus-visible,
+.cartLink:focus-visible {
+  outline: 1px solid #000000;
+  outline-offset: 0.25rem;
+}
+
 .cartLink {
   display: inline-flex;
   align-items: center;
