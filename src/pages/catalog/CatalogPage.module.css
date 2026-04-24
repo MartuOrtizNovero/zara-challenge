@@ -28,13 +28,16 @@
 .productsSection {
   padding: var(--spacing-xl) var(--page-horizontal-padding) var(--spacing-4xl);
 }
+
 .productsGrid {
+  --catalog-border-width: 0.5px;
+  --catalog-border-color: rgba(0, 0, 0, 0.45);
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   width: 100%;
-  border-top: var(--border-width-thin) solid #000000;
-  border-left: var(--border-width-thin) solid #000000;
-}
+  border-top: var(--catalog-border-width) solid var(--catalog-border-color);
+  border-left: var(--catalog-border-width) solid var(--catalog-border-color);
+} 
 
 @media (max-width: 1600px) {
   .productsGrid {
@@ -54,7 +57,6 @@
     padding-left: var(--spacing-lg);
     padding-right: var(--spacing-lg);
   }
-
   .productsGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

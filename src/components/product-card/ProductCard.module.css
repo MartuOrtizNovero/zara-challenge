@@ -6,13 +6,43 @@
 }
 
 .card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 21.5rem; /* 344px */
-  padding: var(--spacing-md); /* 16px */
-  gap: var(--spacing-lg); /* 24px */
-  border-right: var(--border-width-thin) solid #000000;
-  border-bottom: var(--border-width-thin) solid #000000;
+  height: 21.5rem;
+  padding: var(--spacing-md);
+  gap: var(--spacing-lg);
+  border-right: 0.5px solid rgba(0, 0, 0, 0.45);
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.45);
+  background-color: #ffffff;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: #555555;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition:
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 1s ease;
+  pointer-events: none;
+}
+
+.cardLink:hover .card::before,
+.cardLink:focus-visible .card::before {
+  transform: scaleY(1);
+  background-color: #000000;
+}
+
+.imageWrapper,
+.info {
+  position: relative;
+  z-index: 1;
 }
 
 .imageWrapper {
@@ -54,6 +84,7 @@
   line-height: 1;
   text-transform: uppercase;
   color: var(--color-text-secondary);
+  transition: color 0.2s ease;
 }
 
 .name {
@@ -64,6 +95,7 @@
   line-height: 1;
   text-transform: uppercase;
   color: var(--color-text-primary);
+  transition: color 0.2s ease;
 }
 
 .price {
@@ -76,4 +108,26 @@
   white-space: nowrap;
   text-transform: uppercase;
   color: var(--color-text-primary);
+  transition: color 0.2s ease;
+}
+
+.cardLink:hover .brand,
+.cardLink:focus-visible .brand {
+  color: #b3b3b3;
+}
+
+.cardLink:hover .name,
+.cardLink:hover .price,
+.cardLink:focus-visible .name,
+.cardLink:focus-visible .price {
+  color: #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card::before,
+  .brand,
+  .name,
+  .price {
+    transition: none;
+  }
 }
