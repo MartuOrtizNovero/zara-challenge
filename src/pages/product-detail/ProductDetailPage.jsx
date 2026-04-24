@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import ProductCard from "../../components/product-card/ProductCard.jsx";
 import { getProductById } from "../../api/services/productsService.js";
 import { useCart } from "../../context/cart/useCart.js";
 import styles from "./ProductDetailPage.module.css";
@@ -82,6 +83,7 @@ const ProductDetailPage = () => {
   const currentImage = selectedColor?.imageUrl || product.imageUrl;
   const currentPrice = selectedStorage?.price || product.basePrice;
   const isAddToCartDisabled = !selectedStorage || !selectedColor;
+  const hasSimilarProducts = product.similarProducts.length > 0;
 
   const handleAddToCart = () => {
     if (isAddToCartDisabled) {
@@ -267,6 +269,25 @@ const ProductDetailPage = () => {
           </div>
         </dl>
       </section>
+      {hasSimilarProducts ? (
+        <section className={styles.similarProductsSection}>
+          <h2 className={styles.similarProductsTitle}>Similar items</h2>
+
+          <div className={styles.similarProductsGrid}>
+            {product.similarProducts.map((similarProduct) => (
+              <ProductCard
+                key={similarProduct.id}
+                productId={similarProduct.id}
+                brand={similarProduct.brand}
+                name={similarProduct.name}
+                price={formatPrice(similarProduct.basePrice)}
+                imageUrl={similarProduct.imageUrl}
+                imageAlt={similarProduct.name}
+              />
+            ))}
+          </div>
+        </section>
+      ) : null}
     </main>
   );
 };

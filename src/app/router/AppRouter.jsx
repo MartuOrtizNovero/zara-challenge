@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ScrollToTop from "./ScrollToTop.jsx";
 import MainLayout from "../layout/MainLayout.jsx";
 import CartPage from "../../pages/cart/CartPage.jsx";
 import CatalogPage from "../../pages/catalog/CatalogPage.jsx";
@@ -7,6 +8,7 @@ import ProductDetailPage from "../../pages/product-detail/ProductDetailPage.jsx"
 const AppRouter = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<CatalogPage />} />
