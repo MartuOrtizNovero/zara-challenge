@@ -65,6 +65,16 @@ const CatalogPage = () => {
     setSearchValue("");
   };
 
+  const isCompactGrid = products.length < 5;
+
+  const productsGridClassName = `${styles.productsGrid} ${
+    isCompactGrid ? styles.productsGridCompact : ""
+  }`;
+
+  const productsGridStyle = isCompactGrid
+    ? { "--products-count": products.length }
+    : undefined;
+
   return (
     <main className={styles.page}>
       <section className={styles.searchSection}>
@@ -97,16 +107,7 @@ const CatalogPage = () => {
           </div>
         ) : null}
         {showProducts ? (
-          <div
-            className={`${styles.productsGrid} ${
-              products.length < 5 ? styles.productsGridCompact : ""
-            }`}
-            style={
-              products.length < 5
-                ? { "--products-count": products.length }
-                : undefined
-            }
-          >
+          <div className={productsGridClassName} style={productsGridStyle}>
             {products.map((product, index) => (
               <ProductCard
                 key={`${product.id}-${product.name}-${product.brand}-${index}`}
