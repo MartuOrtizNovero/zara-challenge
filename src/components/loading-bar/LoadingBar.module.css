@@ -11,8 +11,7 @@
   background-color: #000000;
   transform: scaleX(0);
   transform-origin: left center;
-  animation: loading-bar-progress 1.8s ease-out forwards,
-    loading-bar-fade 0.45s ease-out 1.45s forwards;
+ animation: loading-bar-progress 0.45s ease-out forwards;
 }
 
 @keyframes loading-bar-progress {
@@ -25,19 +24,8 @@
   }
 }
 
-@keyframes loading-bar-fade {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .bar {
-    animation: none;
-    transform: scaleX(1);
+    animation-duration: 1ms;
   }
 }

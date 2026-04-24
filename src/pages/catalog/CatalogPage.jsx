@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import ProductCard from "../../components/product-card/ProductCard.jsx";
 import SearchBar from "../../components/search-bar/SearchBar.jsx";
@@ -41,10 +42,14 @@ const CatalogPage = () => {
   const [searchValue, setSearchValue] = useState("");
   const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
   const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [animationDirection, setAnimationDirection] = useState("filter");
   const shouldReduceMotion = useReducedMotion();
+  const { startPageLoading, finishPageLoading, canShowPageContent } =
+    useOutletContext();
+  const hasLoadedInitialProductsRef = useRef(false);
+  const [hasLoadedInitialProducts, setHasLoadedInitialProducts] =
+    useState(false);
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
@@ -57,27 +62,56 @@ const CatalogPage = () => {
   }, [searchValue]);
 
   useEffect(() => {
+    let isActive = true;
+    const isInitialProductsLoad = !hasLoadedInitialProductsRef.current;
+
     const loadProducts = async () => {
-      setIsLoading(true);
       setErrorMessage("");
+
+      if (isInitialProductsLoad) {
+        startPageLoading();
+      }
 
       const result = await getProducts({
         search: debouncedSearchValue,
       });
 
+      if (!isActive) {
+        return;
+      }
+
       if (!result.ok) {
         setProducts([]);
         setErrorMessage(result.errorMessage);
-        setIsLoading(false);
+
+        if (isInitialProductsLoad) {
+          hasLoadedInitialProductsRef.current = true;
+          setHasLoadedInitialProducts(true);
+          finishPageLoading();
+        }
+
         return;
       }
 
       setProducts(result.products);
-      setIsLoading(false);
+
+      if (isInitialProductsLoad) {
+        hasLoadedInitialProductsRef.current = true;
+        setHasLoadedInitialProducts(true);
+        finishPageLoading();
+      }
     };
 
     loadProducts();
-  }, [debouncedSearchValue]);
+
+    return () => {
+      isActive = false;
+
+      if (isInitialProductsLoad) {
+        finishPageLoading();
+      }
+    };
+  }, [debouncedSearchValue, startPageLoading, finishPageLoading]);
 
   const handleSearchChange = (event) => {
     const nextValue = event.target.value;
@@ -89,8 +123,16 @@ const CatalogPage = () => {
     setSearchValue(nextValue);
   };
 
-  const showProducts = !errorMessage && products.length > 0;
-  const showEmptyState = !isLoading && !errorMessage && products.length === 0;
+  const canRenderCatalogContent =
+    hasLoadedInitialProducts && canShowPageContent;
+
+  const showProducts =
+    canRenderCatalogContent && !errorMessage && products.length > 0;
+
+  const showEmptyState =
+    canRenderCatalogContent && !errorMessage && products.length === 0;
+
+  const showErrorMessage = canRenderCatalogContent && errorMessage;
 
   const handleClearSearch = () => {
     setAnimationDirection("clear");
@@ -116,24 +158,26 @@ const CatalogPage = () => {
 
   return (
     <main className={styles.page}>
-      <section className={styles.searchSection}>
-        <div className={styles.searchSectionContent}>
-          <SearchBar
-            id="product-search"
-            label="Search for a smartphone"
-            name="search"
-            value={searchValue}
-            placeholder="Search for a smartphone..."
-            onChange={handleSearchChange}
-            onClear={handleClearSearch}
-          />
+      {canRenderCatalogContent ? (
+        <section className={styles.searchSection}>
+          <div className={styles.searchSectionContent}>
+            <SearchBar
+              id="product-search"
+              label="Search for a smartphone"
+              name="search"
+              value={searchValue}
+              placeholder="Search for a smartphone..."
+              onChange={handleSearchChange}
+              onClear={handleClearSearch}
+            />
 
-          <p className={styles.resultsCount}>{products.length} results</p>
-        </div>
-      </section>
+            <p className={styles.resultsCount}>{products.length} results</p>
+          </div>
+        </section>
+      ) : null}
 
       <section className={styles.productsSection} aria-label="Product list">
-        {!isLoading && errorMessage ? (
+        {showErrorMessage ? (
           <p className={styles.errorMessage}>{errorMessage}</p>
         ) : null}
 

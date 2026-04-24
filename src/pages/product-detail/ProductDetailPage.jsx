@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useOutletContext, useParams } from "react-router-dom";
 import ProductCard from "../../components/product-card/ProductCard.jsx";
 import { getProductById } from "../../api/services/productsService.js";
 import { useCart } from "../../context/cart/useCart.js";
@@ -32,36 +32,48 @@ const ProductDetailPage = () => {
   const [selectedColor, setSelectedColor] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const { startPageLoading, finishPageLoading, canShowPageContent } =
+    useOutletContext();
 
   useEffect(() => {
+    let isActive = true;
+
     const loadProductDetail = async () => {
       setIsLoading(true);
       setErrorMessage("");
       setSelectedStorage(null);
       setSelectedColor(null);
+      startPageLoading();
 
       const result = await getProductById(productId);
+
+      if (!isActive) {
+        return;
+      }
 
       if (!result.ok) {
         setProduct(null);
         setErrorMessage(result.errorMessage);
         setIsLoading(false);
+        finishPageLoading();
         return;
       }
 
       setProduct(result.product);
       setIsLoading(false);
+      finishPageLoading();
     };
 
     loadProductDetail();
-  }, [productId]);
 
-  if (isLoading) {
-    return (
-      <main className={styles.page}>
-        <p className={styles.feedbackMessage}>Loading product detail...</p>
-      </main>
-    );
+    return () => {
+      isActive = false;
+      finishPageLoading();
+    };
+  }, [productId, startPageLoading, finishPageLoading]);
+
+  if (isLoading || !canShowPageContent) {
+    return <main className={styles.page} />;
   }
 
   if (errorMessage) {
