@@ -1,34 +1,72 @@
 .searchBar {
+  position: relative;
   width: 100%;
-}
-
-.label {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  border: 0;
-  white-space: nowrap;
+  min-height: 1.6875rem;
 }
 
 .input {
   width: 100%;
-  padding: 0 0 var(--spacing-sm);
-  border: none;
-  border-bottom: var(--border-width-thin) solid var(--color-border);
+  height: 1.6875rem;
+  padding: 0 1.75rem 0 0;
+  border: 0;
+  border-bottom: 1px solid #000000;
   background-color: transparent;
   font-size: 1rem;
-  line-height: 1.5;
+  font-weight: 300;
+  line-height: 1;
+  color: #000000;
 }
 
 .input::placeholder {
-  color: var(--color-text-secondary);
+  color: #b3b3b3;
 }
 
 .input:focus {
   outline: none;
-  border-bottom-color: var(--color-text-primary);
+}
+
+.input::-webkit-search-decoration,
+.input::-webkit-search-cancel-button,
+.input::-webkit-search-results-button,
+.input::-webkit-search-results-decoration {
+  display: none;
+  -webkit-appearance: none;
+}
+
+.input[type="search"] {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.clearButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.1875rem;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1;
+  color: #000000;
+  cursor: pointer;
+}
+
+.clearButton:focus {
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .input {
+    font-size: 0.875rem;
+  }
+
+  .clearButton {
+    font-size: 1.25rem;
+  }
 }

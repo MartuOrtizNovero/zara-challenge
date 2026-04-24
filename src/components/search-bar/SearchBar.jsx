@@ -1,12 +1,18 @@
 import styles from "./SearchBar.module.css";
 
-const SearchBar = ({ id, label, name, value, placeholder, onChange }) => {
+const SearchBar = ({
+  id,
+  label,
+  name,
+  value,
+  placeholder,
+  onChange,
+  onClear,
+}) => {
+  const showClearButton = value.trim().length > 0;
+
   return (
     <div className={styles.searchBar}>
-      <label className={styles.label} htmlFor={id}>
-        {label}
-      </label>
-
       <input
         id={id}
         className={styles.input}
@@ -14,8 +20,20 @@ const SearchBar = ({ id, label, name, value, placeholder, onChange }) => {
         name={name}
         value={value}
         placeholder={placeholder}
+        aria-label={label}
         onChange={onChange}
       />
+
+      {showClearButton ? (
+        <button
+          type="button"
+          className={styles.clearButton}
+          onClick={onClear}
+          aria-label="Clear search"
+        >
+          ×
+        </button>
+      ) : null}
     </div>
   );
 };

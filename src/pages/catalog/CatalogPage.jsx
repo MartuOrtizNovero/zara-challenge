@@ -61,6 +61,10 @@ const CatalogPage = () => {
   const showProducts = !isLoading && !errorMessage && products.length > 0;
   const showEmptyState = !isLoading && !errorMessage && products.length === 0;
 
+  const handleClearSearch = () => {
+    setSearchValue("");
+  };
+
   return (
     <main className={styles.page}>
       <section className={styles.searchSection}>
@@ -72,6 +76,7 @@ const CatalogPage = () => {
             value={searchValue}
             placeholder="Search for a smartphone..."
             onChange={handleSearchChange}
+            onClear={handleClearSearch}
           />
 
           <p className={styles.resultsCount}>{products.length} results</p>
@@ -79,10 +84,6 @@ const CatalogPage = () => {
       </section>
 
       <section className={styles.productsSection} aria-label="Product list">
-        {isLoading ? (
-          <p className={styles.feedbackMessage}>Loading products...</p>
-        ) : null}
-
         {!isLoading && errorMessage ? (
           <p className={styles.errorMessage}>{errorMessage}</p>
         ) : null}
@@ -95,9 +96,17 @@ const CatalogPage = () => {
             </p>
           </div>
         ) : null}
-
         {showProducts ? (
-          <div className={styles.productsGrid}>
+          <div
+            className={`${styles.productsGrid} ${
+              products.length < 5 ? styles.productsGridCompact : ""
+            }`}
+            style={
+              products.length < 5
+                ? { "--products-count": products.length }
+                : undefined
+            }
+          >
             {products.map((product, index) => (
               <ProductCard
                 key={`${product.id}-${product.name}-${product.brand}-${index}`}
