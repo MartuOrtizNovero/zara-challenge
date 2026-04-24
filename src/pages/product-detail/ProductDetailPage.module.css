@@ -399,38 +399,3 @@
     height: 18rem;
   }
 }
-
-.similarProductsSection {
-  margin-top: var(--spacing-4xl);
-}
-
-.similarProductsTitle {
-  margin-bottom: var(--spacing-lg);
-  font-size: 1rem;
-  font-weight: 400;
-  text-transform: uppercase;
-}
-
-.similarProductsGrid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  border-top: var(--border-width-thin) solid var(--color-border);
-  border-left: var(--border-width-thin) solid var(--color-border);
-}
-
-.similarProductsGrid > * {
-  border-right: var(--border-width-thin) solid var(--color-border);
-  border-bottom: var(--border-width-thin) solid var(--color-border);
-}
-
-@media (max-width: 1200px) {
-  .similarProductsGrid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .similarProductsGrid {
-    grid-template-columns: 1fr;
-  }
-}

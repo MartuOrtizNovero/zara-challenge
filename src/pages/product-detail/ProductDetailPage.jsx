@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useOutletContext, useParams } from "react-router-dom";
-import ProductCard from "../../components/product-card/ProductCard.jsx";
+import SimilarProductsCarousel from "../../components/similar-products-carousel/SimilarProductsCarousel.jsx";
 import { getProductById } from "../../api/services/productsService.js";
 import { useCart } from "../../context/cart/useCart.js";
 import styles from "./ProductDetailPage.module.css";
@@ -282,23 +282,10 @@ const ProductDetailPage = () => {
         </dl>
       </section>
       {hasSimilarProducts ? (
-        <section className={styles.similarProductsSection}>
-          <h2 className={styles.similarProductsTitle}>Similar items</h2>
-
-          <div className={styles.similarProductsGrid}>
-            {product.similarProducts.map((similarProduct) => (
-              <ProductCard
-                key={similarProduct.id}
-                productId={similarProduct.id}
-                brand={similarProduct.brand}
-                name={similarProduct.name}
-                price={formatPrice(similarProduct.basePrice)}
-                imageUrl={similarProduct.imageUrl}
-                imageAlt={similarProduct.name}
-              />
-            ))}
-          </div>
-        </section>
+        <SimilarProductsCarousel
+          products={product.similarProducts}
+          formatPrice={formatPrice}
+        />
       ) : null}
     </main>
   );

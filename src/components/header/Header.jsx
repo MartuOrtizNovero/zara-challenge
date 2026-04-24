@@ -3,10 +3,14 @@ import { useCart } from "../../context/cart/useCart.js";
 import LoadingBar from "../loading-bar/LoadingBar.jsx";
 import logoMbst from "../../assets/icons/logo-mbst.svg";
 import bagIcon from "../../assets/icons/bag-icon.svg";
+import bagIconFull from "../../assets/icons/bag-icon-full.svg";
 import styles from "./Header.module.css";
 
 const Header = ({ showLoadingBar, loadingBarKey, onLoadingBarComplete }) => {
   const { totalItems } = useCart();
+
+  const hasCartItems = totalItems > 0;
+  const cartIconSrc = hasCartItems ? bagIconFull : bagIcon;
 
   return (
     <header className={styles.header}>
@@ -18,7 +22,7 @@ const Header = ({ showLoadingBar, loadingBarKey, onLoadingBarComplete }) => {
         <Link className={styles.cartLink} to="/cart" aria-label="Go to cart">
           <img
             className={styles.cartIcon}
-            src={bagIcon}
+            src={cartIconSrc}
             alt=""
             aria-hidden="true"
           />
