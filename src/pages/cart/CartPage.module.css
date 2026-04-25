@@ -123,7 +123,7 @@
   text-transform: uppercase;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .page {
     padding-left: var(--spacing-lg);
     padding-right: var(--spacing-lg);
