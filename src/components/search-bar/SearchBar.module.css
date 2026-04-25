@@ -34,6 +34,16 @@
   -webkit-appearance: none;
 }
 
+.input:focus {
+  outline: none;
+}
+
+.input:focus-visible {
+  outline: none;
+  border-bottom: 1px solid #000000;
+  box-shadow: 0 1px 0 0 #000000;
+}
+
 .clearButton {
   position: absolute;
   top: 0;
