@@ -11,7 +11,7 @@
   background-color: #000000;
   transform: scaleX(0);
   transform-origin: left center;
- animation: loading-bar-progress 0.45s ease-out forwards;
+  animation: loading-bar-progress 0.45s ease-out forwards;
 }
 
 @keyframes loading-bar-progress {

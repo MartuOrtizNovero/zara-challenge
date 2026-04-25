@@ -21,10 +21,6 @@
   color: #b3b3b3;
 }
 
-.input:focus {
-  outline: none;
-}
-
 .input::-webkit-search-decoration,
 .input::-webkit-search-cancel-button,
 .input::-webkit-search-results-button,
@@ -55,10 +51,6 @@
   line-height: 1;
   color: #000000;
   cursor: pointer;
-}
-
-.clearButton:focus {
-  outline: none;
 }
 
 @media (max-width: 768px) {

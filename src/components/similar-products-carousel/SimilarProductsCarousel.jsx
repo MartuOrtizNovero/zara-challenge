@@ -22,7 +22,7 @@ const SimilarProductsCarousel = ({ products, formatPrice }) => {
       >
         <div className={styles.track}>
           {products.map((product) => (
-            <div key={product.id} className={styles.slide}>
+            <div key={product.listKey} className={styles.slide}>
               <ProductCard
                 productId={product.id}
                 brand={product.brand}

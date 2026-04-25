@@ -34,9 +34,6 @@ const formatPrice = (price) => {
     maximumFractionDigits: 0,
   }).format(price);
 };
-const getCatalogProductKey = (product, index) => {
-  return `${product.id}-${product.name}-${product.brand}-${index}`;
-};
 
 const CatalogPage = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -147,14 +144,11 @@ const CatalogPage = () => {
 
   const productsGridStyle = isCompactGrid
     ? {
-        "--products-count": products.length,
         "--compact-grid-width": `${products.length * PRODUCT_CARD_WIDTH_REM}rem`,
       }
     : undefined;
 
-  const productsGridKey = products
-    .map((product, index) => getCatalogProductKey(product, index))
-    .join("|");
+  const productsGridKey = products.map((p) => p.listKey).join("|");
 
   return (
     <main className={styles.page}>
@@ -220,9 +214,9 @@ const CatalogPage = () => {
                       }
                 }
               >
-                {products.map((product, index) => (
+                {products.map((product) => (
                   <ProductCard
-                    key={getCatalogProductKey(product, index)}
+                    key={product.listKey}
                     productId={product.id}
                     brand={product.brand}
                     name={product.name}

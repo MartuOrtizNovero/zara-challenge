@@ -1,7 +1,8 @@
 import apiClient from "../client/apiClient.js";
 
-const mapProductSummary = (product) => ({
+const mapProductSummary = (product, index) => ({
   id: product.id,
+  listKey: `${product.id}-${index}`,
   brand: product.brand,
   name: product.name,
   basePrice: product.basePrice,

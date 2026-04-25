@@ -58,7 +58,6 @@
   object-position: center;
 }
 
-
 .content {
   display: flex;
   flex-direction: column;
@@ -66,8 +65,7 @@
 }
 
 .brand,
-.description,
-.selectedColorName {
+.description {
   display: none;
 }
 

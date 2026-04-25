@@ -47,6 +47,7 @@ const CartPage = () => {
                     type="button"
                     className={styles.removeButton}
                     onClick={() => removeItemFromCart(cartItem.cartItemId)}
+                    aria-label={`Remove ${cartItem.name} from cart`}
                   >
                     Remove
                   </button>
