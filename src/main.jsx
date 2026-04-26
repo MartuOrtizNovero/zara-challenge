@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App.jsx";
+import AppRouter from "./app/router/AppRouter.jsx";
 import { CartProvider } from "./context/cart/CartProvider.jsx";
 import "./styles/tokens.css";
 import "./styles/globals.css";
@@ -8,7 +8,7 @@ import "./styles/globals.css";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <CartProvider>
-      <App />
+      <AppRouter />
     </CartProvider>
   </StrictMode>,
 );
