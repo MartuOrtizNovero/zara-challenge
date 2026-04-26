@@ -121,7 +121,7 @@ const ProductDetailPage = () => {
 
   return (
     <main className={styles.page}>
-      <Link className={styles.backLink} to="/">
+      <Link className={styles.backLink} to="/" aria-label="Back to catalog">
         &lt; Back
       </Link>
 
