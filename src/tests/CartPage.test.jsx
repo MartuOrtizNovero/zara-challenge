@@ -53,7 +53,7 @@ describe("CartPage", () => {
       removeItemFromCart: vi.fn(),
     });
     const totalRow = screen.getByText("TOTAL").closest("p");
-    expect(totalRow).toHaveTextContent("999 €");
+    expect(totalRow).toHaveTextContent("999 EUR");
   });
 
   it("calls removeItemFromCart with the correct cartItemId when Remove is clicked", async () => {

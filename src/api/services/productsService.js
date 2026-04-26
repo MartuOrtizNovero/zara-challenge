@@ -1,12 +1,14 @@
 import apiClient from "../client/apiClient.js";
 
+const toHttps = (url) => (url ? url.replace(/^http:\/\//i, "https://") : url);
+
 const mapProductSummary = (product, index) => ({
   id: product.id,
   listKey: `${product.id}-${index}`,
   brand: product.brand,
   name: product.name,
   basePrice: product.basePrice,
-  imageUrl: product.imageUrl,
+  imageUrl: toHttps(product.imageUrl),
 });
 
 const mapProductDetail = (product) => ({
@@ -16,7 +18,7 @@ const mapProductDetail = (product) => ({
   description: product.description,
   basePrice: product.basePrice,
   rating: product.rating,
-  imageUrl: product.colorOptions?.[0]?.imageUrl || "",
+  imageUrl: toHttps(product.colorOptions?.[0]?.imageUrl) || "",
   specs: {
     screen: product.specs?.screen || "",
     resolution: product.specs?.resolution || "",
@@ -30,7 +32,7 @@ const mapProductDetail = (product) => ({
   colorOptions: (product.colorOptions || []).map((colorOption) => ({
     name: colorOption.name,
     hexCode: colorOption.hexCode,
-    imageUrl: colorOption.imageUrl,
+    imageUrl: toHttps(colorOption.imageUrl),
   })),
   storageOptions: (product.storageOptions || []).map((storageOption) => ({
     capacity: storageOption.capacity,
