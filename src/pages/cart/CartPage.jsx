@@ -33,13 +33,13 @@ const CartPage = () => {
                 </div>
 
                 <div className={styles.itemInfo}>
-                  <h2 className={styles.itemName}>{cartItem.name}</h2>
+                  <h2 className={styles.itemInfoStyle}>{cartItem.name}</h2>
 
-                  <p className={styles.itemVariant}>
+                  <p className={styles.itemInfoStyle}>
                     {cartItem.storage} | {cartItem.color.name}
                   </p>
 
-                  <p className={styles.itemPrice}>
+                  <p className={styles.itemInfoStyle}>
                     {formatPrice(cartItem.price)}
                   </p>
 

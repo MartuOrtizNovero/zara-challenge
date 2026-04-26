@@ -45,7 +45,7 @@
   gap: var(--spacing-sm);
 }
 
-.itemName {
+.itemInfoStyle {
   font-size: 1rem;
   font-weight: 400;
   text-transform: uppercase;
@@ -123,10 +123,17 @@
   text-transform: uppercase;
 }
 
+@media (max-width: 1199px) {
+  .page {
+    padding-left: 2.5rem; /* 40px */
+    padding-right: 2.5rem; /* 40px */
+  }
+}
+
 @media (max-width: 767px) {
   .page {
-    padding-left: var(--spacing-lg);
-    padding-right: var(--spacing-lg);
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
   }
 
   .title {
