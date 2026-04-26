@@ -132,7 +132,6 @@ const ProductDetailPage = () => {
         </div>
 
         <div className={styles.content}>
-          <p className={styles.brand}>{product.brand}</p>
           <h1 className={styles.name}>{product.name}</h1>
 
           <p className={styles.price}>
@@ -143,7 +142,7 @@ const ProductDetailPage = () => {
 
           <section className={styles.optionsSection}>
             <h2 className={styles.optionsTitle}>
-              Storage · How much space do you need?
+              Storage ¿How much space do you need?
             </h2>
 
             <div className={styles.storageOptions}>
@@ -170,7 +169,7 @@ const ProductDetailPage = () => {
 
           <section className={styles.optionsSection}>
             <h2 className={styles.optionsTitle}>
-              Color · Pick your favourite.
+              Color. Pick your favourite.
             </h2>
 
             <div className={styles.colorOptions}>
@@ -194,9 +193,9 @@ const ProductDetailPage = () => {
               })}
             </div>
 
-            <p className={styles.selectedColorName}>
-              {selectedColor ? selectedColor.name : "Select a color"}
-            </p>
+            {selectedColor && (
+              <p className={styles.selectedColorName}>{selectedColor.name}</p>
+            )}
           </section>
 
           <button

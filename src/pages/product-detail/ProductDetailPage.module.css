@@ -64,7 +64,6 @@
   width: 23.75rem; /* 380px */
 }
 
-.brand,
 .description {
   display: none;
 }
@@ -146,10 +145,9 @@
 
 .selectedColorName {
   margin-top: var(--spacing-xs);
-  font-size: 0.625rem;
+  font-size: 0.75rem; /* 12px */
   font-weight: 300;
   line-height: 1;
-  text-transform: uppercase;
   color: #000000;
 }
 
@@ -270,12 +268,12 @@
   }
 
   .name {
-    font-size: 1rem;
+    font-size: 1.25rem; /* 20px */
   }
 
   .price {
     margin-top: 0.5rem;
-    font-size: 0.875rem;
+    font-size: 0.875rem; /* 14px */
   }
 
   .optionsSection {
@@ -291,11 +289,15 @@
     font-size: 0.75rem;
   }
 
+  .selectedColorName {
+    font-size: 0.625rem; /* 10px */
+  }
+
   .storageButton {
     min-width: 3.75rem;
     height: 2rem;
     padding: 0 0.625rem;
-    font-size: 0.6875rem;
+    font-size: 0.75rem; /* 12px */
   }
 
   .colorOptions {
@@ -359,11 +361,11 @@
   }
 
   .name {
-    font-size: 1.5rem;
+    font-size: 1.25rem; /* 20px */
   }
 
   .price {
-    font-size: 1.25rem;
+    font-size: 0.875rem; /* 14px */
   }
 
   .optionsSection {
@@ -378,6 +380,10 @@
     min-width: 4.5rem;
     height: 2.5rem;
     font-size: 0.75rem;
+  }
+
+  .selectedColorName {
+    font-size: 0.625rem; /* 10px */
   }
 
   .colorButton {

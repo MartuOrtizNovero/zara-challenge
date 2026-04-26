@@ -23,48 +23,52 @@
 
 .cartItem {
   display: grid;
-  grid-template-columns: 12rem minmax(0, 1fr);
-  gap: var(--spacing-2xl);
-  align-items: start;
-  max-width: 34.25rem;
+  grid-template-columns: 16.375rem minmax(0, 1fr); /* 262px image */
+  gap: 2.5rem; /* 40px */
+  max-width: 34.25rem; /* 548px */
 }
 
 .imageWrapper {
   width: 100%;
+  height: 16rem; /* 256px */
+  overflow: hidden;
 }
 
 .image {
   display: block;
   width: 100%;
+  height: 100%;
   object-fit: contain;
+  object-position: top center;
 }
 
 .itemInfo {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: 1.25rem; /* 20px */
 }
 
-.itemInfoStyle {
-  font-size: 1rem;
-  font-weight: 400;
-  text-transform: uppercase;
+.itemsHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem; /* 4px */
 }
 
-.itemVariant {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  color: var(--color-text-secondary);
-}
-
+.itemName,
+.itemVariant,
 .itemPrice {
-  font-size: 0.875rem;
+  font-size: 0.75rem; /* 12px */
+  font-weight: 300;
+  text-transform: uppercase;
+  color: #000000;
 }
 
 .removeButton {
+  margin-top: auto;
   align-self: flex-start;
   padding: 0;
   font-size: 0.75rem;
+  font-weight: 300;
   color: #d33;
   text-transform: uppercase;
 }
@@ -75,7 +79,6 @@
   justify-content: space-between;
   gap: var(--spacing-xl);
   padding-top: var(--spacing-2xl);
-  border-top: var(--border-width-thin) solid var(--color-border);
 }
 
 .continueShoppingLink {
@@ -120,6 +123,7 @@
   border: var(--border-width-thin) solid var(--color-text-primary);
   background-color: var(--color-text-primary);
   color: var(--color-background);
+  font-size: 0.75rem;
   text-transform: uppercase;
 }
 
@@ -137,26 +141,57 @@
   }
 
   .title {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
   }
 
   .cartItem {
-    grid-template-columns: 1fr;
+    grid-template-columns: 10rem minmax(0, 1fr); /* 160px image */
+    gap: 1.5rem; /* 24px */
     max-width: none;
   }
 
+  .imageWrapper {
+    height: 12.375rem; /* ~198px */
+  }
+
+  .itemInfo {
+    padding-top: 2.5rem; /* 40px */
+    padding-bottom: 2.5rem; /* 40px */
+    justify-content: space-between;
+    gap: 0;
+  }
+
   .footer {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: stretch;
+    gap: var(--spacing-xs); /* 8px — prevents wrapping */
   }
 
   .summary {
-    flex-direction: column;
-    align-items: stretch;
+    display: contents; /* unwrap so total and pay become direct footer flex children */
   }
 
-  .continueShoppingLink,
+  .total {
+    order: 0;
+    flex: 0 0 100%;
+    justify-content: space-between;
+    font-size: 0.875rem; /* 14px */
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .continueShoppingLink {
+    order: 1;
+    flex: 1;
+    min-width: 0;
+    padding: 0 var(--spacing-xs);
+    white-space: nowrap;
+  }
+
   .payButton {
-    width: 100%;
+    order: 2;
+    flex: 1;
+    min-width: 0;
+    padding: 0 var(--spacing-xs);
   }
 }
