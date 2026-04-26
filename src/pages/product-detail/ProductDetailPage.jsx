@@ -3,15 +3,8 @@ import { Link, useOutletContext, useParams } from "react-router-dom";
 import SimilarProductsCarousel from "../../components/similar-products-carousel/SimilarProductsCarousel.jsx";
 import { getProductById } from "../../api/services/productsService.js";
 import { useCart } from "../../context/cart/useCart.js";
+import { formatPrice } from "../../utils/formatPrice.js";
 import styles from "./ProductDetailPage.module.css";
-
-const formatPrice = (price) => {
-  return new Intl.NumberFormat("es-ES", {
-    style: "currency",
-    currency: "EUR",
-    maximumFractionDigits: 0,
-  }).format(price);
-};
 
 const createCartItemId = () => {
   if (window.crypto?.randomUUID) {

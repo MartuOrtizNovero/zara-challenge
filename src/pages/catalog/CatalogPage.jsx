@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import ProductCard from "../../components/product-card/ProductCard.jsx";
 import SearchBar from "../../components/search-bar/SearchBar.jsx";
 import { getProducts } from "../../api/services/productsService.js";
+import { formatPrice } from "../../utils/formatPrice.js";
 import styles from "./CatalogPage.module.css";
 
 const SEARCH_DEBOUNCE_DELAY = 300;
@@ -27,13 +28,6 @@ const productsGridVariants = {
 
 const MotionDiv = motion.div;
 
-const formatPrice = (price) => {
-  return new Intl.NumberFormat("es-ES", {
-    style: "currency",
-    currency: "EUR",
-    maximumFractionDigits: 0,
-  }).format(price);
-};
 
 const CatalogPage = () => {
   const [searchValue, setSearchValue] = useState("");

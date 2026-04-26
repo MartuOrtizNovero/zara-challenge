@@ -1,14 +1,7 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/cart/useCart.js";
+import { formatPrice } from "../../utils/formatPrice.js";
 import styles from "./CartPage.module.css";
-
-const formatPrice = (price) => {
-  return new Intl.NumberFormat("es-ES", {
-    style: "currency",
-    currency: "EUR",
-    maximumFractionDigits: 0,
-  }).format(price);
-};
 
 const CartPage = () => {
   const { cartItems, totalPrice, removeItemFromCart } = useCart();
