@@ -48,10 +48,7 @@
 
 .productsGrid.productsGridCompact {
   width: min(100%, var(--compact-grid-width));
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(min(var(--catalog-card-width), 100%), 1fr)
-  );
+  grid-template-columns: repeat(var(--compact-grid-cols), minmax(0, 1fr));
 }
 
 .errorMessage {
@@ -96,6 +93,11 @@
   .productsGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .productsGrid.productsGridCompact {
+    width: min(100%, calc(var(--compact-grid-cols-tablet) * var(--catalog-card-width)));
+    grid-template-columns: repeat(var(--compact-grid-cols-tablet), minmax(0, 1fr));
+  }
 }
 
 /* Mobile */
@@ -108,5 +110,10 @@
 
   .productsGrid {
     grid-template-columns: 1fr;
+  }
+
+  .productsGrid.productsGridCompact {
+    grid-template-columns: 1fr;
+    width: 100%;
   }
 }

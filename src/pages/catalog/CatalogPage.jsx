@@ -139,6 +139,8 @@ const CatalogPage = () => {
   const productsGridStyle = isCompactGrid
     ? {
         "--compact-grid-width": `${products.length * PRODUCT_CARD_WIDTH_REM}rem`,
+        "--compact-grid-cols": products.length,
+        "--compact-grid-cols-tablet": Math.min(products.length, 2),
       }
     : undefined;
 
