@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useOutletContext, useParams } from "react-router-dom";
+import { Link, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import SimilarProductsCarousel from "../../components/similar-products-carousel/SimilarProductsCarousel.jsx";
 import { getProductById } from "../../api/services/productsService.js";
 import { useCart } from "../../context/cart/useCart.js";
@@ -19,6 +19,7 @@ const createCartItemId = () => {
 
 const ProductDetailPage = () => {
   const { productId } = useParams();
+  const navigate = useNavigate();
   const { addItemToCart } = useCart();
   const [product, setProduct] = useState(null);
   const [selectedStorage, setSelectedStorage] = useState(null);
@@ -110,6 +111,7 @@ const ProductDetailPage = () => {
     };
 
     addItemToCart(cartItem);
+    navigate("/cart");
   };
 
   return (
