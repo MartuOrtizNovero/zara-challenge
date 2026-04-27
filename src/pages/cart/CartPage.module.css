@@ -69,7 +69,7 @@
   padding: 0;
   font-size: 0.75rem;
   font-weight: 300;
-  color: #d33;
+  color: var(--color-danger);
   text-transform: uppercase;
 }
 

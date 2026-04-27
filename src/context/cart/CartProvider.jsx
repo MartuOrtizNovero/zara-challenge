@@ -48,12 +48,6 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  const clearCart = () => {
-    dispatch({
-      type: CART_ACTION_TYPES.CLEAR_CART,
-    });
-  };
-
   const totalItems = state.items.length;
 
   const totalPrice = state.items.reduce((accumulator, cartItem) => {
@@ -66,7 +60,6 @@ export const CartProvider = ({ children }) => {
     totalPrice,
     addItemToCart,
     removeItemFromCart,
-    clearCart,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

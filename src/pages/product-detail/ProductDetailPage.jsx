@@ -142,7 +142,7 @@ const ProductDetailPage = () => {
 
           <section className={styles.optionsSection}>
             <h2 className={styles.optionsTitle}>
-              Storage ¿How much space do you need?
+              Storage. How much space do you need?
             </h2>
 
             <div className={styles.storageOptions}>
@@ -207,9 +207,6 @@ const ProductDetailPage = () => {
             Add to cart
           </button>
 
-          {product.description ? (
-            <p className={styles.description}>{product.description}</p>
-          ) : null}
         </div>
       </section>
 

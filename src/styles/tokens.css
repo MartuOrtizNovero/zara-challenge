@@ -4,11 +4,11 @@
 
   /* Colors */
   --color-background: #ffffff;
-  --color-text-primary: #111111;
+  --color-text-primary: #000000;
   --color-text-secondary: #6f6f6f;
   --color-border: #d9d9d9;
   --color-surface: #ffffff;
-  --color-danger: #d14b4b;
+  --color-danger: #DF0000;
 
   /* Spacing */
   --spacing-2xs: 0.25rem; /* 4px */

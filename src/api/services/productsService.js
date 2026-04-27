@@ -17,7 +17,6 @@ const mapProductDetail = (product) => ({
   name: product.name,
   description: product.description,
   basePrice: product.basePrice,
-  rating: product.rating,
   imageUrl: toHttps(product.colorOptions?.[0]?.imageUrl) || "",
   specs: {
     screen: product.specs?.screen || "",

@@ -64,10 +64,6 @@
   width: 23.75rem; /* 380px */
 }
 
-.description {
-  display: none;
-}
-
 .name {
   margin: 0;
   font-size: 1.5rem; /* 24px */

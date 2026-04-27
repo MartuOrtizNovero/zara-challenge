@@ -54,9 +54,6 @@
 .errorMessage {
   padding: var(--spacing-xl) 0;
   font-size: 0.875rem;
-}
-
-.errorMessage {
   color: var(--color-danger);
 }
 
