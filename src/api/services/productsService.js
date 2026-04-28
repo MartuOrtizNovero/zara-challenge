@@ -71,7 +71,7 @@ export const getProducts = async ({
   } catch (error) {
     result.status = error?.response?.status ?? null;
     result.errorMessage =
-      error?.response?.data?.message || "No fue posible obtener los productos.";
+      error?.response?.data?.message || "It was not possible to obtain the products.";
   }
 
   return result;
@@ -94,7 +94,7 @@ export const getProductById = async (productId) => {
     result.status = error?.response?.status ?? null;
     result.errorMessage =
       error?.response?.data?.message ||
-      "No fue posible obtener el detalle del producto.";
+      "We were unable to retrieve the product details.";
   }
 
   return result;
