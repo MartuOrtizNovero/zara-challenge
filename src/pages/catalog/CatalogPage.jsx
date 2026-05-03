@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import ProductCard from "../../components/product-card/ProductCard.jsx";
@@ -32,15 +32,12 @@ const MotionDiv = motion.div;
 const CatalogPage = () => {
   const [searchValue, setSearchValue] = useState("");
   const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [animationDirection, setAnimationDirection] = useState("filter");
   const shouldReduceMotion = useReducedMotion();
   const { startPageLoading, finishPageLoading, canShowPageContent } =
     useOutletContext();
-  const hasLoadedInitialProductsRef = useRef(false);
-  const [hasLoadedInitialProducts, setHasLoadedInitialProducts] =
-    useState(false);
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
@@ -53,19 +50,17 @@ const CatalogPage = () => {
   }, [searchValue]);
 
   useEffect(() => {
+    if (products !== null) return;
+    startPageLoading();
+    return () => finishPageLoading();
+  }, [products, startPageLoading, finishPageLoading]);
+
+  useEffect(() => {
     let isActive = true;
-    const isInitialProductsLoad = !hasLoadedInitialProductsRef.current;
 
     const loadProducts = async () => {
       setErrorMessage("");
-
-      if (isInitialProductsLoad) {
-        startPageLoading();
-      }
-
-      const result = await getProducts({
-        search: debouncedSearchValue,
-      });
+      const result = await getProducts({ search: debouncedSearchValue });
 
       if (!isActive) {
         return;
@@ -74,35 +69,18 @@ const CatalogPage = () => {
       if (!result.ok) {
         setProducts([]);
         setErrorMessage(result.errorMessage);
-
-        if (isInitialProductsLoad) {
-          hasLoadedInitialProductsRef.current = true;
-          setHasLoadedInitialProducts(true);
-          finishPageLoading();
-        }
-
         return;
       }
 
       setProducts(result.products);
-
-      if (isInitialProductsLoad) {
-        hasLoadedInitialProductsRef.current = true;
-        setHasLoadedInitialProducts(true);
-        finishPageLoading();
-      }
     };
 
     loadProducts();
 
     return () => {
       isActive = false;
-
-      if (isInitialProductsLoad) {
-        finishPageLoading();
-      }
     };
-  }, [debouncedSearchValue, startPageLoading, finishPageLoading]);
+  }, [debouncedSearchValue]);
 
   const handleSearchChange = (event) => {
     const nextValue = event.target.value;
@@ -113,6 +91,8 @@ const CatalogPage = () => {
 
     setSearchValue(nextValue);
   };
+
+  const hasLoadedInitialProducts = products !== null;
 
   const canRenderCatalogContent =
     hasLoadedInitialProducts && canShowPageContent;
@@ -130,7 +110,7 @@ const CatalogPage = () => {
     setSearchValue("");
   };
 
-  const isCompactGrid = products.length < 5;
+  const isCompactGrid = !!products && products.length < 5;
 
   const productsGridClassName = `${styles.productsGrid} ${
     isCompactGrid ? styles.productsGridCompact : ""
@@ -144,7 +124,7 @@ const CatalogPage = () => {
       }
     : undefined;
 
-  const productsGridKey = products.map((p) => p.listKey).join("|");
+  const productsGridKey = products?.map((p) => p.listKey).join("|") ?? "";
 
   return (
     <main className={styles.page}>
