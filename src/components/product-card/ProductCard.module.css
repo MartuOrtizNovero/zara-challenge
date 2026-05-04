@@ -52,6 +52,7 @@
   width: 100%;
   height: 16.0625rem; /* 257px */
   overflow: hidden;
+  mix-blend-mode: multiply;
 }
 
 .imagePlaceholder {
