@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useCart } from "../../context/cart/useCart.js";
 import { formatPrice } from "../../utils/formatPrice.js";
 import styles from "./CartPage.module.css";
+import imagePlaceholder from "../../assets/icons/image-placeholder.svg";
 
 const CartPage = () => {
   const { cartItems, totalPrice, removeItemFromCart } = useCart();
@@ -18,11 +19,15 @@ const CartPage = () => {
             {cartItems.map((cartItem) => (
               <article key={cartItem.cartItemId} className={styles.cartItem}>
                 <div className={styles.imageWrapper}>
-                  <img
-                    className={styles.image}
-                    src={cartItem.imageUrl}
-                    alt={cartItem.name}
-                  />
+                  {cartItem.imageUrl ? (
+                    <img
+                      className={styles.image}
+                      src={cartItem.imageUrl}
+                      alt={cartItem.name}
+                    />
+                  ) : (
+                    <img src={imagePlaceholder} alt="" aria-hidden="true" />
+                  )}
                 </div>
 
                 <div className={styles.itemInfo}>

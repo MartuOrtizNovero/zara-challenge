@@ -5,6 +5,7 @@ import { getProductById } from "../../api/services/productsService.js";
 import { useCart } from "../../context/cart/useCart.js";
 import { formatPrice } from "../../utils/formatPrice.js";
 import styles from "./ProductDetailPage.module.css";
+import imagePlaceholder from "../../assets/icons/image-placeholder.svg";
 
 const createCartItemId = () => {
   if (window.crypto?.randomUUID) {
@@ -129,7 +130,7 @@ const ProductDetailPage = () => {
               alt={product.name}
             />
           ) : (
-            <div className={styles.imagePlaceholder} aria-hidden="true" />
+            <img src={imagePlaceholder} alt="" aria-hidden="true" />
           )}
         </div>
 

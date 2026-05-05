@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./ProductCard.module.css";
+import imagePlaceholder from "../../assets/icons/image-placeholder.svg";
 
 const ProductCard = ({ productId, brand, name, price, imageUrl, imageAlt }) => {
   return (
@@ -9,7 +10,7 @@ const ProductCard = ({ productId, brand, name, price, imageUrl, imageAlt }) => {
           {imageUrl ? (
             <img className={styles.image} src={imageUrl} alt={imageAlt} />
           ) : (
-            <div className={styles.imagePlaceholder} aria-hidden="true" />
+            <img src={imagePlaceholder} alt="" aria-hidden="true" />
           )}
         </div>
 

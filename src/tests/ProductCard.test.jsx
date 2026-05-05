@@ -35,9 +35,11 @@ describe("ProductCard", () => {
     expect(image).toHaveAttribute("src", defaultProps.imageUrl);
   });
 
-  it("renders a placeholder when imageUrl is not provided", () => {
+  it("renders a placeholder image when imageUrl is not provided", () => {
     renderProductCard({ imageUrl: "" });
-    expect(screen.queryByRole("img")).not.toBeInTheDocument();
+    const placeholder = screen.getByRole("presentation", { hidden: true });
+    expect(placeholder).toBeInTheDocument();
+    expect(placeholder).toHaveAttribute("alt", "");
   });
 
   it("links to the correct product detail page", () => {
