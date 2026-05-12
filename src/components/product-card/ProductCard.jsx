@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import styles from "./ProductCard.module.css";
 import imagePlaceholder from "../../assets/icons/image-placeholder.svg";
@@ -22,6 +23,15 @@ const ProductCard = ({ productId, brand, name, price, imageUrl, imageAlt }) => {
       </article>
     </Link>
   );
+};
+
+ProductCard.propTypes = {
+  productId: PropTypes.string.isRequired,
+  brand: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string,
+  imageAlt: PropTypes.string.isRequired,
 };
 
 export default ProductCard;

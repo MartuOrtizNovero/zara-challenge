@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/cart/useCart.js";
 import LoadingBar from "../loading-bar/LoadingBar.jsx";
@@ -35,6 +36,12 @@ const Header = ({ showLoadingBar, loadingBarKey, onLoadingBarComplete }) => {
       ) : null}
     </header>
   );
+};
+
+Header.propTypes = {
+  showLoadingBar: PropTypes.bool,
+  loadingBarKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onLoadingBarComplete: PropTypes.func,
 };
 
 export default Header;

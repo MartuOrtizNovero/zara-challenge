@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import ProductCard from "../product-card/ProductCard.jsx";
 import styles from "./SimilarProductsCarousel.module.css";
 
@@ -37,6 +38,20 @@ const SimilarProductsCarousel = ({ products, formatPrice }) => {
       </div>
     </section>
   );
+};
+
+SimilarProductsCarousel.propTypes = {
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      listKey: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+      brand: PropTypes.string,
+      name: PropTypes.string.isRequired,
+      basePrice: PropTypes.number.isRequired,
+      imageUrl: PropTypes.string,
+    }),
+  ).isRequired,
+  formatPrice: PropTypes.func.isRequired,
 };
 
 export default SimilarProductsCarousel;

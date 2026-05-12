@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styles from "./SearchBar.module.css";
 
 const SearchBar = ({
@@ -36,6 +37,16 @@ const SearchBar = ({
       ) : null}
     </div>
   );
+};
+
+SearchBar.propTypes = {
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  onClear: PropTypes.func.isRequired,
 };
 
 export default SearchBar;
