@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useOutletContext, useParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useOutletContext,
+  useParams,
+} from "react-router-dom";
 import SimilarProductsCarousel from "../../components/similar-products-carousel/SimilarProductsCarousel.jsx";
 import { getProductById } from "../../api/services/productsService.js";
 import { useCart } from "../../context/cart/useCart.js";
@@ -130,7 +135,7 @@ const ProductDetailPage = () => {
               alt={product.name}
             />
           ) : (
-            <img src={imagePlaceholder} alt="" aria-hidden="true" />
+            <img src={imagePlaceholder} alt="Product image not available" />
           )}
         </div>
 
@@ -171,9 +176,7 @@ const ProductDetailPage = () => {
           </section>
 
           <section className={styles.optionsSection}>
-            <h2 className={styles.optionsTitle}>
-              Color. Pick your favourite.
-            </h2>
+            <h2 className={styles.optionsTitle}>Color. Pick your favourite.</h2>
 
             <div className={styles.colorOptions}>
               {product.colorOptions.map((colorOption) => {
@@ -209,7 +212,6 @@ const ProductDetailPage = () => {
           >
             Add to cart
           </button>
-
         </div>
       </section>
 

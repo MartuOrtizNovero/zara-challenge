@@ -26,7 +26,10 @@ const CartPage = () => {
                       alt={cartItem.name}
                     />
                   ) : (
-                    <img src={imagePlaceholder} alt="" aria-hidden="true" />
+                    <img
+                      src={imagePlaceholder}
+                      alt="Product image not available"
+                    />
                   )}
                 </div>
 

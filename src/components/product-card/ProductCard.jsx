@@ -10,7 +10,7 @@ const ProductCard = ({ productId, brand, name, price, imageUrl, imageAlt }) => {
           {imageUrl ? (
             <img className={styles.image} src={imageUrl} alt={imageAlt} />
           ) : (
-            <img src={imagePlaceholder} alt="" aria-hidden="true" />
+            <img src={imagePlaceholder} alt="Product image not available" />
           )}
         </div>
 
