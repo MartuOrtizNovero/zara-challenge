@@ -9,19 +9,9 @@ import SimilarProductsCarousel from "../../components/similar-products-carousel/
 import useProductDetail from "../../hooks/useProductDetail.js";
 import { useCart } from "../../context/cart/useCart.js";
 import { formatPrice } from "../../utils/formatPrice.js";
+import createCartItemId from "../../utils/createCartItemId.js";
 import styles from "./ProductDetailPage.module.css";
 import imagePlaceholder from "../../assets/icons/image-placeholder.svg";
-
-const createCartItemId = () => {
-  if (window.crypto?.randomUUID) {
-    return window.crypto.randomUUID();
-  }
-
-  const randomValues = new Uint32Array(4);
-  window.crypto.getRandomValues(randomValues);
-
-  return `cart-item-${Array.from(randomValues).join("-")}`;
-};
 
 const ProductDetailPage = () => {
   const { productId } = useParams();
@@ -100,9 +90,10 @@ const ProductDetailPage = () => {
               className={styles.image}
               src={currentImage}
               alt={product.name}
+              loading="lazy"
             />
           ) : (
-            <img src={imagePlaceholder} alt="Product image not available" />
+            <img src={imagePlaceholder} alt="Product image not available" loading="lazy" />
           )}
         </div>
 

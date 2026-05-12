@@ -8,9 +8,9 @@ const ProductCard = ({ productId, brand, name, price, imageUrl, imageAlt }) => {
       <article className={styles.card}>
         <div className={styles.imageWrapper}>
           {imageUrl ? (
-            <img className={styles.image} src={imageUrl} alt={imageAlt} />
+            <img className={styles.image} src={imageUrl} alt={imageAlt} loading="lazy" />
           ) : (
-            <img src={imagePlaceholder} alt="Product image not available" />
+            <img src={imagePlaceholder} alt="Product image not available" loading="lazy" />
           )}
         </div>
 

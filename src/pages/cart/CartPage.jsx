@@ -24,11 +24,13 @@ const CartPage = () => {
                       className={styles.image}
                       src={cartItem.imageUrl}
                       alt={cartItem.name}
+                      loading="lazy"
                     />
                   ) : (
                     <img
                       src={imagePlaceholder}
                       alt="Product image not available"
+                      loading="lazy"
                     />
                   )}
                 </div>
