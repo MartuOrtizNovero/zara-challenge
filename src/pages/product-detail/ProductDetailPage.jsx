@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Link,
   useNavigate,
@@ -6,7 +6,7 @@ import {
   useParams,
 } from "react-router-dom";
 import SimilarProductsCarousel from "../../components/similar-products-carousel/SimilarProductsCarousel.jsx";
-import { getProductById } from "../../api/services/productsService.js";
+import useProductDetail from "../../hooks/useProductDetail.js";
 import { useCart } from "../../context/cart/useCart.js";
 import { formatPrice } from "../../utils/formatPrice.js";
 import styles from "./ProductDetailPage.module.css";
@@ -27,50 +27,17 @@ const ProductDetailPage = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const { addItemToCart } = useCart();
-  const [product, setProduct] = useState(null);
+  const [prevProductId, setPrevProductId] = useState(productId);
   const [selectedStorage, setSelectedStorage] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("");
-  const { startPageLoading, finishPageLoading, canShowPageContent } =
-    useOutletContext();
+  const { canShowPageContent } = useOutletContext();
+  const { product, isLoading, errorMessage } = useProductDetail(productId);
 
-  useEffect(() => {
-    let isActive = true;
-
-    const loadProductDetail = async () => {
-      setIsLoading(true);
-      setErrorMessage("");
-      setSelectedStorage(null);
-      setSelectedColor(null);
-      startPageLoading();
-
-      const result = await getProductById(productId);
-
-      if (!isActive) {
-        return;
-      }
-
-      if (!result.ok) {
-        setProduct(null);
-        setErrorMessage(result.errorMessage);
-        setIsLoading(false);
-        finishPageLoading();
-        return;
-      }
-
-      setProduct(result.product);
-      setIsLoading(false);
-      finishPageLoading();
-    };
-
-    loadProductDetail();
-
-    return () => {
-      isActive = false;
-      finishPageLoading();
-    };
-  }, [productId, startPageLoading, finishPageLoading]);
+  if (prevProductId !== productId) {
+    setPrevProductId(productId);
+    setSelectedStorage(null);
+    setSelectedColor(null);
+  }
 
   if (isLoading || !canShowPageContent) {
     return <main className={styles.page} />;
